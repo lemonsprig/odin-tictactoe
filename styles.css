@@ -22,3 +22,14 @@ main {
   justify-items: center;
   background: transparent;
 }
+
+.player-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.active-player {
+  color: blue;
+}

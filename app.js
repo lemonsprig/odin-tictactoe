@@ -5,7 +5,10 @@ const game = (() => {
   const player1 = createPlayer("Ian", "X");
   const player2 = createPlayer("Bob", "O");
 
-  let activePlayer = player2;
+  let activePlayer = player1;
+
+  const player1Info = document.querySelector(".playerX");
+  const player2Info = document.querySelector(".playerY");
 
   function setActivePlayer() {
     if (activePlayer === player1) {
@@ -13,6 +16,8 @@ const game = (() => {
     } else {
       activePlayer = player1;
     }
+    player1Info.classList.toggle("active-player");
+    player2Info.classList.toggle("active-player");
   }
 
   function getActivePlayer() {
