@@ -1,0 +1,24 @@
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  width: 60%;
+  padding-top: 4rem;
+}
+
+.gameboard {
+  margin-top: 2rem;
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cell {
+  border: 3px solid black;
+  border-radius: 1rem;
+  aspect-ratio: 1/1;
+  justify-items: center;
+  background: transparent;
+}
