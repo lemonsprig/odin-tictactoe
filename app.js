@@ -24,7 +24,25 @@ const game = (() => {
     return activePlayer;
   }
 
-  return { getActivePlayer, setActivePlayer };
+  function checkForWin(board) {
+    const winPositions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    winPositions.forEach((winArray) => {
+      if (winArray.every((cell) => board[cell] === activePlayer.token))
+        console.log(`${activePlayer.name} wins`);
+    });
+  }
+
+  return { getActivePlayer, setActivePlayer, checkForWin };
 })();
 
 // Players
@@ -57,9 +75,9 @@ const gameBoard = (() => {
     if (board[cell] !== "") return;
     const activePlayer = game.getActivePlayer();
     board[cell] = activePlayer.token;
-    game.setActivePlayer();
-    console.log(board);
     renderBoard();
+    game.checkForWin(board);
+    game.setActivePlayer();
   }
 
   const renderBoard = () => {
