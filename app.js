@@ -2,17 +2,64 @@
 // only need one.. create using module pattern
 
 const game = (() => {
-  const player1 = createPlayer("Ian", "X");
-  const player2 = createPlayer("Bob", "O");
-
+  const player1 = createPlayer("Player 1", "X");
+  const player2 = createPlayer("Player 2", "O");
+  let ai = false;
+  let aiDifficulty = "easy";
   let activePlayer = player1;
+  let gameState = "active";
 
+  const modal = document.querySelector(".modal");
+  const options = document.querySelector("#frm-options");
   const player1Info = document.querySelector(".playerX");
   const player2Info = document.querySelector(".playerY");
+  const playAI = document.querySelector("#playAI");
+
+  options.addEventListener("submit", setOptions);
+  playAI.addEventListener("click", setAIOptions);
+
+  function setOptions(e) {
+    e.preventDefault();
+    console.log(e);
+    const p1Name = document.querySelector("#player1Name");
+    const p2Name = document.querySelector("#player2Name");
+    player1.name = p1Name.value;
+    player2.name = p2Name.value;
+    modal.classList.add("hidden");
+  }
+
+  function setAIOptions() {
+    const p2Name = document.querySelector("#player2Name");
+    const difficulty = document.querySelectorAll(".ai-difficulty");
+    if (playAI.checked) {
+      p2Name.value = "Computer";
+      ai = true;
+      difficulty.forEach((item) => {
+        item.disabled = false;
+        item.addEventListener("change", handleDifficultyChange);
+      });
+    } else {
+      p2Name.value = "";
+      ai = false;
+      difficulty.forEach((item) => {
+        item.disabled = true;
+        item.removeEventListener("change", handleDifficultyChange);
+      });
+    }
+  }
+
+  function handleDifficultyChange() {
+    if (this.checked) {
+      aiDifficulty = this.dataset.difficutly;
+    }
+  }
 
   function setActivePlayer() {
     if (activePlayer === player1) {
       activePlayer = player2;
+      if (ai === true) {
+        gameBoard.aiMove();
+      }
     } else {
       activePlayer = player1;
     }
@@ -37,12 +84,25 @@ const game = (() => {
     ];
 
     winPositions.forEach((winArray) => {
-      if (winArray.every((cell) => board[cell] === activePlayer.token))
-        console.log(`${activePlayer.name} wins`);
+      if (winArray.every((cell) => board[cell] === activePlayer.token)) {
+        console.log(winArray);
+        gameBoard.highlightWin(winArray);
+        game.gameState = "won";
+        //console.log(`${activePlayer.name} ${gameState}`);
+      }
     });
+
+    if (gameState === "active" && board.every((cell) => cell != "")) {
+      console.log("Yello");
+      game.gameState = "tie";
+    }
+    if (gameState !== "won") {
+      game.setActivePlayer();
+    }
+    console.log(gameState);
   }
 
-  return { getActivePlayer, setActivePlayer, checkForWin };
+  return { getActivePlayer, setActivePlayer, checkForWin, gameState };
 })();
 
 // Players
@@ -72,12 +132,13 @@ const gameBoard = (() => {
   });
 
   function markCell(cell) {
+    console.log(game.gameState);
+    if (game.gameState !== "active") return;
     if (board[cell] !== "") return;
     const activePlayer = game.getActivePlayer();
     board[cell] = activePlayer.token;
     renderBoard();
     game.checkForWin(board);
-    game.setActivePlayer();
   }
 
   const renderBoard = () => {
@@ -87,6 +148,12 @@ const gameBoard = (() => {
     });
   };
 
+  function highlightWin(winPositions) {
+    winPositions.forEach((cell) => {
+      gameBoard.querySelector(`.cell[data-id="${cell}"]`).classList.add("win");
+    });
+  }
+
   function resetBoard() {
     board.forEach((item, index) => {
       board[index] = "";
@@ -95,5 +162,5 @@ const gameBoard = (() => {
     renderBoard();
   }
 
-  return { resetBoard };
+  return { resetBoard, highlightWin, aiMove };
 })();
