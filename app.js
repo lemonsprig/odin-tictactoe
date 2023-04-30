@@ -58,6 +58,7 @@ const game = (() => {
     if (activePlayer === player1) {
       activePlayer = player2;
       if (ai === true) {
+        console.log("b");
         gameBoard.aiMove();
       }
     } else {
@@ -96,8 +97,9 @@ const game = (() => {
       console.log("Yello");
       game.gameState = "tie";
     }
-    if (gameState !== "won") {
+    if (gameState === "active") {
       game.setActivePlayer();
+      //gameBoard.aiMove();
     }
     console.log(gameState);
   }
@@ -139,6 +141,16 @@ const gameBoard = (() => {
     board[cell] = activePlayer.token;
     renderBoard();
     game.checkForWin(board);
+  }
+
+  function aiMove() {
+    let position;
+    //console.log("a", Math.floor(Math.random() * 10));
+    do {
+      position = Math.floor(Math.random() * 10);
+    } while (board[position] != "");
+    console.log("Position: ", position, "value: ", board[position]);
+    markCell(position);
   }
 
   const renderBoard = () => {
