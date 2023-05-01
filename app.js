@@ -147,11 +147,6 @@ const gameBoard = (() => {
 
   function aiMove() {
     if (game.aiDifficulty === "easy") {
-      // let position;
-      // do {
-      //   position = Math.floor(Math.random() * 10);
-      // } while (board[position] != "");
-
       //randomise positon
       const availablePositions = getAvailablePositions(board);
       position =
