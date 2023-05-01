@@ -58,7 +58,6 @@ const game = (() => {
     if (activePlayer === player1) {
       activePlayer = player2;
       if (ai === true) {
-        console.log("b");
         gameBoard.aiMove();
       }
     } else {
@@ -89,22 +88,25 @@ const game = (() => {
         console.log(winArray);
         gameBoard.highlightWin(winArray);
         game.gameState = "won";
-        //console.log(`${activePlayer.name} ${gameState}`);
       }
     });
 
     if (gameState === "active" && board.every((cell) => cell != "")) {
-      console.log("Yello");
       game.gameState = "tie";
     }
     if (gameState === "active") {
       game.setActivePlayer();
-      //gameBoard.aiMove();
     }
     console.log(gameState);
   }
 
-  return { getActivePlayer, setActivePlayer, checkForWin, gameState };
+  return {
+    getActivePlayer,
+    setActivePlayer,
+    checkForWin,
+    gameState,
+    aiDifficulty,
+  };
 })();
 
 // Players
@@ -144,12 +146,35 @@ const gameBoard = (() => {
   }
 
   function aiMove() {
-    let position;
-    do {
-      position = Math.floor(Math.random() * 10);
-    } while (board[position] != "");
-    console.log("Position: ", position, "value: ", board[position]);
-    markCell(position);
+    if (game.aiDifficulty === "easy") {
+      // let position;
+      // do {
+      //   position = Math.floor(Math.random() * 10);
+      // } while (board[position] != "");
+
+      //randomise positon
+      const availablePositions = getAvailablePositions(board);
+      position =
+        availablePositions[
+          Math.floor(Math.random() * availablePositions.length)
+        ];
+
+      console.log("Position: ", position, "value: ", board[position]);
+      markCell(position);
+    } else if (game.aiDifficulty === "impossible") {
+      //get available spaces
+      console.log(getAvailablePositions(board));
+    }
+  }
+
+  function getAvailablePositions(board) {
+    const availablePositions = [];
+    board.forEach((position, index) => {
+      if (position === "") {
+        availablePositions.push(index);
+      }
+    });
+    return availablePositions;
   }
 
   const renderBoard = () => {
