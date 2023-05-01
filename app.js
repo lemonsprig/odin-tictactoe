@@ -145,7 +145,6 @@ const gameBoard = (() => {
 
   function aiMove() {
     let position;
-    //console.log("a", Math.floor(Math.random() * 10));
     do {
       position = Math.floor(Math.random() * 10);
     } while (board[position] != "");
