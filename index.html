@@ -14,21 +14,21 @@
       <div class="modal-content">
         <button class="btn-close">X</button>
         <form id="frm-options">
-          <label for="player1Name"
-            >Player 1 Name:
+          <div class="frm-control">
+            <label for="player1Name">Player 1 Name:</label>
             <input type="text" id="player1Name" required />
-          </label>
-
-          <label for="player2Name"
-            >Player 2 Name:
+          </div>
+          <div class="frm-control">
+            <label for="player2Name">Player 2 Name:</label>
             <input type="text" id="player2Name" />
-          </label>
-          <label>
-            Play against AI?
+          </div>
+          <div class="frm-control">
+            <label for="playAI"> Play against AI? </label>
             <input type="checkbox" name="" id="playAI" class="checkbox" />
-          </label>
-          <label
-            >Easy<input
+          </div>
+          <div class="frm-control">
+            <label for="ai-easy">Easy</label>
+            <input
               type="radio"
               name="difficulty"
               data-difficulty="easy"
@@ -36,25 +36,30 @@
               class="ai-difficulty"
               checked
               disabled
-          /></label>
-          <label
-            >Hard<input
+            />
+          </div>
+          <div class="frm-control">
+            <label for="ai-hard">Hard</label>
+            <input
               type="radio"
               name="difficulty"
               data-difficulty="hard"
               id="ai-hard"
               class="ai-difficulty"
               disabled
-          /></label>
-          <label
-            >Impossible<input
+            />
+          </div>
+          <div class="frm-control">
+            <label for="ai-impossible">Impossible</label>
+            <input
               type="radio"
               name="difficulty"
               data-difficulty="impossible"
               id="ai-impossible"
               class="ai-difficulty"
               disabled
-          /></label>
+            />
+          </div>
           <button type="submit">Play</button>
         </form>
       </div>
