@@ -39,6 +39,21 @@ main {
   display: none;
 }
 
+.message {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.game-buttons {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  justify-content: center;
+}
+.game-buttons button {
+  width: 25%;
+}
+
 .modal {
   position: fixed;
   z-index: 1;
@@ -76,13 +91,6 @@ main {
   gap: 0.5rem;
   justify-items: start;
   align-items: center;
-}
-
-label {
-  /* display: grid;
-  grid-template-columns: 0.5fr auto;
-  gap: 1rem;
-  justify-items: start; */
 }
 
 .checkbox {

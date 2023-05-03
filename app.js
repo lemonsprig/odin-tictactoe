@@ -14,9 +14,13 @@ const game = (() => {
   const player1Info = document.querySelector(".playerX");
   const player2Info = document.querySelector(".playerY");
   const playAI = document.querySelector("#playAI");
+  const btnPlayAgain = document.querySelector(".btn-playagain");
+  const btnReset = document.querySelector(".btn-reset");
 
   options.addEventListener("submit", setOptions);
   playAI.addEventListener("click", setAIOptions);
+  btnPlayAgain.addEventListener("click", playAgain);
+  btnReset.addEventListener("click", reset);
 
   function setOptions(e) {
     e.preventDefault();
@@ -26,6 +30,7 @@ const game = (() => {
     player1.name = p1Name.value;
     player2.name = p2Name.value;
     modal.classList.add("hidden");
+    playAgain();
   }
 
   function setAIOptions() {
@@ -52,6 +57,17 @@ const game = (() => {
     if (this.checked) {
       aiDifficulty = this.dataset.difficutly;
     }
+  }
+
+  function playAgain() {
+    setActivePlayer();
+    game.gameState = "active";
+    gameBoard.resetBoard();
+    btnPlayAgain.disabled;
+  }
+
+  function reset() {
+    modal.classList.remove("hidden");
   }
 
   function setActivePlayer() {
@@ -88,6 +104,7 @@ const game = (() => {
         console.log(winArray);
         gameBoard.highlightWin(winArray);
         game.gameState = "won";
+        btnPlayAgain.disabled = false;
       }
     });
 
@@ -176,6 +193,7 @@ const gameBoard = (() => {
     board.forEach((cell, index) => {
       const btn = gameBoard.querySelector(`[data-id="${index}"]`);
       btn.textContent = cell;
+      btn.classList.remove("win");
     });
   };
 
